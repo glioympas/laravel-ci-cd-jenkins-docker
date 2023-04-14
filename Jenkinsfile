@@ -28,17 +28,17 @@ pipeline {
                 sh 'docker compose ps'
             }
         }
+        stage("Populate .env file") {
+                steps {
+                    dir("/Users/lioy/.jenkins/workspace/envs/laravel-test") {
+                        fileOperations([fileCopyOperation(excludes: '', flattenFiles: true, includes: '.env', targetLocation: "${WORKSPACE}")])
+                    }
+                }
+            }
         stage("Run Composer Install") {
             steps {
                 sh 'docker compose run --rm composer install'
                 sh 'docker compose run --rm artisan key:generate'
-            }
-        }
-        stage("Populate .env file") {
-            steps {
-                dir("/Users/lioy/.jenkins/workspace/envs/laravel-test") {
-                    fileOperations([fileCopyOperation(excludes: '', flattenFiles: true, includes: '.env', targetLocation: "${WORKSPACE}")])
-                }
             }
         }
         stage("Run Tests") {
