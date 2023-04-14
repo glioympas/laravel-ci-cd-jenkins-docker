@@ -107,7 +107,7 @@ services:
         - USER=${USER:-youruser}
     container_name: artisan
     volumes:
-      - ./:/var/www/html:delegated
+      - ./:/var/www/html
     depends_on:
       - mysql
     working_dir: /var/www/html
