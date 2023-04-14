@@ -31,6 +31,7 @@ pipeline {
         stage("Run Composer Install") {
             steps {
                 sh 'docker compose run --rm composer install'
+                sh 'docker compose run --rm artisan key:generate'
             }
         }
         stage("Run Tests") {
